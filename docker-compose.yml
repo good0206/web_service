@@ -6,19 +6,17 @@ services:
     build:
       context: nginx/
     container_name: service-nginx
-#    depends_on:
-#      - music
     volumes:
+      - ./nginx/cert:/etc/nginx/cert
       - ./nginx/conf:/etc/nginx/conf.d
       - ./static:/usr/share/nginx/html
-#      - nginxlog:/var/log/nginx/
     networks:
       - service
 
   service-redis:
     build:
       context: redis/
-    container_name: ervice-redis
+    container_name: service-redis
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
