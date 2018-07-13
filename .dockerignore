@@ -1,0 +1,5 @@
+.idea/
+.git/
+celerybeat.pid
+celerybeat-schedule
+*.md

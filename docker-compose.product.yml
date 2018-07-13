@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  music:
+    env_file:
+      - env/product.env
+
+  music_celery:
+    env_file:
+      - env/product.env
+
+  music_celery_beat:
+    env_file:
+      - env/product.env

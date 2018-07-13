@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+
+  service-nginx:
+    build:
+      context: nginx/
+    container_name: service-nginx
+#    depends_on:
+#      - music
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./static:/usr/share/nginx/html
+      - nginxlog:/var/log/nginx/
+    networks:
+      - service
+
+  service-redis:
+    build:
+      context: redis/
+    container_name: ervice-redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - redisbak:/data
+    networks:
+      - service
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+
+  service-mysql:
+    build:
+      context: mysql/
+    restart: always
+    container_name: service-mysql
+    env_file:
+      - ./mysql/.mysql.env
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./mysql/conf/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+    networks:
+      - service
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+
+volumes:
+  nginxlog:
+    driver: local
+  redisbak:
+    driver: local
+  mysqldata:
+    driver: local
+
+
+networks:
+
+  service:
+    driver: bridge
+

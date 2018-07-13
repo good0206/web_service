@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  service-nginx:
+    ports:
+      - "80:8000"
+
+  service-redis:
+    ports:
+      - "6380:6379"
+
+  service-mysql:
+    ports:
+      - "3306:3306"

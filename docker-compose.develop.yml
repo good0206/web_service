@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+
+  music:
+    env_file:
+      - env/develop.env
+
+  music_celery:
+    env_file:
+      - env/develop.env
+
+  music_celery_beat:
+    env_file:
+      - env/develop.env
+
+  redis:
+    build:
+      context: redis/
+    container_name: music-redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - redisbak:/usr/local/var/db/redis/
+    ports:
+      - "6380:6379"
+    networks:
+      - music
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+
+#  mysql:
+#    build:
+#      context: mysql/
+#    restart: always
+#    container_name: music-mysql
+#    env_file:
+#      - ./mysql/.mysql.env
+#    volumes:
+#      - mysqldata:/var/lib/mysql
+#    ports:
+#      - "3307:3306"
+#    networks:
+#      - music
+#    ulimits:
+#      nproc: 65535
+#      nofile:
+#        soft: 20000
+#        hard: 40000
