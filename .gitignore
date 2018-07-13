@@ -1,0 +1,16 @@
+.idea/
+celerybeat*
+static/*
+__pycache__
+*.pyc
+logs/
+static/*.html
+media/
+conf.py
+*.rst
+Makefile
+_build
+_static
+_templates
+source
+build/
