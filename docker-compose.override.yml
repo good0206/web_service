@@ -5,6 +5,7 @@ services:
   service-nginx:
     ports:
       - "80:8000"
+      - "443:443"
 
   service-redis:
     ports:
