@@ -11,7 +11,7 @@ services:
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
       - ./static:/usr/share/nginx/html
-      - nginxlog:/var/log/nginx/
+#      - nginxlog:/var/log/nginx/
     networks:
       - service
 
@@ -50,8 +50,8 @@ services:
         hard: 40000
 
 volumes:
-  nginxlog:
-    driver: local
+#  nginxlog:
+#    driver: local
   redisbak:
     driver: local
   mysqldata:
