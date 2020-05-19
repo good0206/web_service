@@ -13,6 +13,23 @@ services:
     networks:
       - local-service
 
+  service-rabbitmq:
+    build:
+      context: rabbitmq/
+    container_name: service-rabbitmq
+    env_file:
+       - ./rabbitmq/.rabbitmq.env
+    ports:
+      - "8090:15672"
+#      volumes:
+#        - ./nginx/conf:/etc/nginx/conf.d
+#        - ./static:/usr/share/nginx/html
+      #      - nginxlog:/var/log/nginx/
+    networks:
+      - local-service
+
+
+
   service-redis:
     build:
       context: redis/
@@ -21,6 +38,8 @@ services:
     volumes:
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
       - redisbak:/data
+    ports:
+      - "6380:6379"
     networks:
       - local-service
     ulimits:
@@ -39,8 +58,11 @@ services:
     volumes:
       - mysqldata:/var/lib/mysql
       - ./mysql/conf/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+    ports:
+      - "3307:3306"
     networks:
       - local-service
+
     ulimits:
       nproc: 65535
       nofile:
@@ -55,7 +77,5 @@ volumes:
 
 
 networks:
-
   local-service:
     external: true
-
