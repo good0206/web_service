@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-pay
+spec:
+  ports:
+  - port: 8010
+  selector:
+    app: service-pay
+  clusterIP: None
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: service-pay
+spec:
+  selector:
+    matchLabels:
+      app: service-pay
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: service-pay
+    spec:
+      containers:
+      - image: good0206/service-pay:latest
+        name: service-pay
+        env:
+          # Use secret in real usage
+          - name: DB_HOST
+            value: "mysql"
+          - name: DB_USER
+            value: "root"
+          - name: DB_PASS
+            value: "root"
+          - name: DB_PORT
+            value: "3306"
+          - name: REDIS_HOST
+            value: "redis"
+          - name: REDIS_PASS
+            value: "123456"
+          - name: REDIS_PORT
+            value: "6379"
+        ports:
+        - containerPort: 8010
+          name: service-pay
