@@ -21,7 +21,7 @@ services:
        - ./rabbitmq/.rabbitmq.env
     ports:
       - "8090:15672"
-      - "5670:5672"
+      - "5672:5672"
 #      volumes:
 #        - ./nginx/conf:/etc/nginx/conf.d
 #        - ./static:/usr/share/nginx/html
